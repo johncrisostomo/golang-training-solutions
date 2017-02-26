@@ -8,16 +8,6 @@ import (
   "strconv"
 )
 
-/*
-  Solution to Project Euler #13
-
-  Problem Description: 
-
-  Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.  
-
-  Problem URL : https://projecteuler.net/problem=13
-*/
-
 func main() {
   file, _ := os.Open("largenumber.txt") 
   defer file.Close()
@@ -48,3 +38,13 @@ func sum(nums []string) string {
 
   return strconv.FormatInt(sum, 10)
 }
+
+/*
+  Solution to Project Euler #13
+
+  Problem Description: 
+
+  Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.  
+
+  Problem URL : https://projecteuler.net/problem=13
+*/
