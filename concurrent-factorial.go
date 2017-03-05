@@ -19,7 +19,9 @@ func generator() chan int {
   output := make(chan int)
   go func() {
     for i := 0; i < 10; i++ {
-      output<-i+5
+      for j := 0; j < 10; j++ {
+        output<-j+5
+      }
     }
     close(output)
   }()
