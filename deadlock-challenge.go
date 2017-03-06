@@ -28,7 +28,8 @@ func gen() <-chan int {
 }
 
 func fanOut(in <-chan int, n int) []<-chan int {
-  xc := make([]<-chan int, n)
+  //xc := make([]<-chan int, n)
+  var xc []<-chan int
   for i := 0; i < n; i++ {
     xc = append(xc, factorial(in))
   }
