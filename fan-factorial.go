@@ -19,9 +19,12 @@ func main() {
 	r9 := launch(c)
 	r10 := launch(c)
 
+  i := 0
 	for n := range merge(r1, r2, r3, r4, r5, r6, r7, r8, r9, r10) {
+    i++
 		fmt.Println(n)
 	}
+  fmt.Println("Done printing ", i, " factorials.")
 }
 
 func generator() chan int {
@@ -54,12 +57,12 @@ func merge(cs ...chan int) chan int {
 	var wg sync.WaitGroup
 	wg.Add(len(cs))
 	for _, c := range cs {
-		go func() {
-			for n := range c {
+		go func(cn chan int) {
+			for n := range cn {
 				output <- n
 			}
 			wg.Done()
-		}()
+		}(c)
 	}
 	go func() {
 		wg.Wait()
