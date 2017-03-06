@@ -27,9 +27,9 @@ func main() {
 func generator() chan int {
 	output := make(chan int)
 	go func() {
-		for i := 0; i < 10; i++ {
+		for i := 0; i < 100; i++ {
 			for j := 5; j < 15; j++ {
-				output <- i
+				output <- j
 			}
 		}
 		close(output)
@@ -43,6 +43,7 @@ func launch(c chan int) chan int {
 		for n := range c {
 			output <- factorial(n)
 		}
+    close(output)
 	}()
 	return output
 }
@@ -53,12 +54,12 @@ func merge(cs ...chan int) chan int {
 	var wg sync.WaitGroup
 	wg.Add(len(cs))
 	for _, c := range cs {
-		go func(cn chan int) {
-			for n := range cn {
+		go func() {
+			for n := range c {
 				output <- n
 			}
 			wg.Done()
-		}(c)
+		}()
 	}
 	go func() {
 		wg.Wait()
@@ -70,7 +71,7 @@ func merge(cs ...chan int) chan int {
 
 func factorial(n int) int {
 	total := 1
-	for i := n; i > 0; i++ {
+	for i := n; i > 0; i-- {
 		total *= i
 	}
 	return total
